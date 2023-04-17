@@ -3,7 +3,7 @@ import pgInstance from "@/app/lib";
 import { BookResponse } from '@/app/typings';
 import qs from "query-string";
 
-export async function GET(request: NextRequest, response: NextResponse) {
+export async function GET(request: NextRequest) {
 
   let query = "SELECT * from book";
   const { author_id , limit } = qs.parse(request.nextUrl.searchParams.toString());
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
   return NextResponse.json({ data: result }, { status: 200 });
 }
 
-export async function POST(request: NextResponse, response: NextResponse) {
+export async function POST(request: NextRequest, response: NextResponse) {
   try {
     const { author_id, book_name } = await request.json() as BookResponse;
     const sql = `INSERT INTO "book" (book_name, author_id) VALUES ('${book_name}', '${author_id}') returning *`;
